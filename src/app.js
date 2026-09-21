@@ -34,7 +34,13 @@ app.use(cors({
 // Logging
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
-}
+}app.use(express.static(path.join(__dirname, "../dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
+});
+
+
 
 // Body parsing
 app.use(express.json({ limit: '50mb' }));
