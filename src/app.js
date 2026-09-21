@@ -34,13 +34,7 @@ app.use(cors({
 // Logging
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
-}app.use(express.static(path.join(__dirname, "../dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dist/index.html"));
-});
-
-
+}
 
 // Body parsing
 app.use(express.json({ limit: '50mb' }));
@@ -66,12 +60,27 @@ app.use('/api/templates', templateRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ success: true, message: 'Growthora Mail Rocket API is running', timestamp: new Date().toISOString() });
+  res.json({
+    success: true,
+    message: 'Growthora Mail Rocket API is running',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Frontend fallback - Express 5 compatible
+app.get('/{*splat}', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // 404
 app.use((req, res) => {
-  res.status(404).json({ success: false, message: 'Route not found' });
+  res.status(404).json({
+    success: false,
+    message: 'Route not found'
+  });
 });
 
 // Global error handler
