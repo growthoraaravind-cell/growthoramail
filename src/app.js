@@ -68,11 +68,10 @@ app.get('/api/health', (req, res) => {
 });
 
 // Serve frontend static files
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
-// Frontend fallback - Express 5 compatible
 app.get('/{*splat}', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 // 404
