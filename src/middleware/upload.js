@@ -1,6 +1,6 @@
 const multer = require('multer');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require("crypto");
 const fs = require('fs');
 
 const ensureDir = (dir) => {
@@ -16,7 +16,7 @@ const excelStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, `excel_${uuidv4()}${ext}`);
+    cb(null, `excel_${randomUUID()}${ext}`);
   }
 });
 
@@ -29,7 +29,7 @@ const attachmentStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, `attach_${uuidv4()}${ext}`);
+    cb(null, `attach_${randomUUID()}${ext}`);
   }
 });
 
