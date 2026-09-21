@@ -1,0 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const { auth } = require('../middleware/auth');
+const { getTemplates, createTemplate, updateTemplate, deleteTemplate, duplicateTemplate } = require('../controllers/templateController');
+router.use(auth);
+router.get('/', getTemplates);
+router.post('/', createTemplate);
+router.put('/:id', updateTemplate);
+router.delete('/:id', deleteTemplate);
+router.post('/:id/duplicate', duplicateTemplate);
+module.exports = router;
